@@ -16,7 +16,20 @@ export async function createTodo(formData: FormData) {
 
         return { success: true};
     } catch (e) {
-        console.error('Error in creation:', e);
+        console.error('Error creation task:', e);
         return { success: false, error: 'Cannot create task'};
+    }
+}
+
+export async function getTodos() {
+    try {
+        await connectDB();
+
+        const todos = await Todo.find();
+        
+        return {success: true, todos};
+    } catch (e) {
+        console.error('Error retrieve tasks', e);
+        return { success: false, error: 'Cannot retrieve tasks'}
     }
 }
