@@ -49,6 +49,23 @@ export async function deleteTodo(id: string) {
     }
 }
 
+export async function updateTodo(id: string, title: string) {
+    try {
+        await connectDB();
+
+        const todo = await Todo.findByIdAndUpdate(id, { title });
+
+        if (!todo) return { success: false, error: 'Todo not found' }
+
+        revalidatePath("/");
+
+        return { success: true }
+    } catch (e) {
+        console.error('Error updating todo', e);
+        return { success: false, error: 'Cannot update todo' }
+    }
+}
+
 export async function completeTodo(id: string, isCompleted: boolean) {
     try {
         await connectDB();

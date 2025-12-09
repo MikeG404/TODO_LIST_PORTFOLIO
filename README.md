@@ -30,7 +30,11 @@
 - [X] Créer la partie UI
     - [X] Créer le bouton supprimer pour chaque Todo
 
-- [ ] Passer le formulaire sur react-hook-form et retirer Form data dans les actions
+- [X] Passer le formulaire sur react-hook-form et retirer Form data dans les actions
     - [X] utiliser le hook useForm
     - [X] utiliser le register
-    - [] Validation de données
+    - [X] Validation de données
+
+- [ ] Gèrer l'Update de l'application directement en cliquant sur le titre
+    - [X] Créer la fonction updateTodo
+    - [X] Gèrer le clic sur le titre pour qu'il se met en mode édition
