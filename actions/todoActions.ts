@@ -2,6 +2,7 @@
 
 import connectDB from "@/lib/db";
 import Todo from "@/models/Todo.model";
+import { error } from "console";
 import { revalidatePath } from "next/cache";
 
 export async function createTodo(formData: FormData) {
@@ -14,10 +15,10 @@ export async function createTodo(formData: FormData) {
 
         revalidatePath("/");
 
-        return { success: true};
+        return { success: true };
     } catch (e) {
         console.error('Error creation task:', e);
-        return { success: false, error: 'Cannot create task'};
+        return { success: false, error: 'Cannot create task' };
     }
 }
 
@@ -26,10 +27,27 @@ export async function getTodos() {
         await connectDB();
 
         const todos = await Todo.find();
-        
-        return {success: true, todos};
+
+        return { success: true, todos };
     } catch (e) {
-        console.error('Error retrieve tasks', e);
-        return { success: false, error: 'Cannot retrieve tasks'}
+        console.error('Error retrieve todo', e);
+        return { success: false, error: 'Cannot retrieve todos' }
+    }
+}
+
+export async function completeTodo(id: string, isCompleted: boolean) {
+    try {
+        await connectDB();
+
+        const todo = await Todo.findByIdAndUpdate(id, { isCompleted });
+
+        if (!todo) return { success: false, error: 'Todo not found' }
+
+        revalidatePath("/");
+
+        return { success: true }
+    } catch (e) {
+        console.error('Error updating todo', e);
+        return { success: false, error: 'Cannot complete todo' }
     }
 }

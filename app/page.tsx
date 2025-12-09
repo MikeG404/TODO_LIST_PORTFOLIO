@@ -1,4 +1,5 @@
 import { createTodo } from "@/actions/todoActions";
+import TodoList from "./components/TodoList";
 
 export default async function Home() {  
   
@@ -26,7 +27,7 @@ export default async function Home() {
         </form>
 
         <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-md">
-           <p className="text-gray-400 text-center italic">La liste s'affichera ici...</p>
+           <TodoList />
         </div>
       </div>
     </main>

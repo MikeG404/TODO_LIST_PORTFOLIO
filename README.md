@@ -1,14 +1,23 @@
 ## Training Microtasks
 
-- [ ] Pouvoir afficher la liste des tâches depuis MongoDB dans Next.js
+- [x] Pouvoir afficher la liste des tâches depuis MongoDB dans Next.js
     - [X] Créer la fonction getTodos
         - [X] Se connecter à la base de données avec connectDB()
         - [x] Récupèrer la liste des données
         - [x] retourner les données reçues
         - [x] console.log pour vérifier les données
     PARTIE UI
-    - [ ] Créer un composant Task avec les valeurs récupèrer en DB
-    - [ ] Afficher le composant pour vérification
-    - [ ] Créer le composants TaskList
-        - [ ] Utiliser Map et importer Task
-    - [ ] Afficher la liste dans le Dahsboard
+    - [X] Créer un composant Task avec les valeurs récupèrer en DB
+    - [X] Afficher le composant pour vérification
+    - [x] Créer le composants TaskList
+        - [x] Utiliser Map et importer Task
+    - [x] Afficher la liste dans le Dahsboard
+
+-  [ ] Gèrer la partie checkbox
+    - [X] Vérifier quelle propriété permet de checker
+    - [X] Si isCompleted est true la checkbox est coché
+    - [X] Faire le changement en DB
+        - [X] Récupèrer l'id de l'élément checker
+        - [X] Changer la valeur de isCompleted par true si il 
+              est false et inversément
+        - [X] Renvoyer un success
