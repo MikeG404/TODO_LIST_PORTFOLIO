@@ -2,7 +2,6 @@
 
 import connectDB from "@/lib/db";
 import Todo from "@/models/Todo.model";
-import { error } from "console";
 import { revalidatePath } from "next/cache";
 
 export async function createTodo(formData: FormData) {
@@ -26,9 +25,9 @@ export async function getTodos() {
     try {
         await connectDB();
 
-        const todos = await Todo.find();
+        const todos = await Todo.find().sort({ createdAt: -1 }).lean();
 
-        return { success: true, todos };
+        return { success: true, todos: JSON.parse(JSON.stringify(todos)) };
     } catch (e) {
         console.error('Error retrieve todo', e);
         return { success: false, error: 'Cannot retrieve todos' }
