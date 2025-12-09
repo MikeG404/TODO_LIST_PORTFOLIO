@@ -29,3 +29,8 @@
 
 - [X] Créer la partie UI
     - [X] Créer le bouton supprimer pour chaque Todo
+
+- [ ] Passer le formulaire sur react-hook-form et retirer Form data dans les actions
+    - [X] utiliser le hook useForm
+    - [X] utiliser le register
+    - [] Validation de données

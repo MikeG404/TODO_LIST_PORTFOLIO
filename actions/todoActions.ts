@@ -4,11 +4,9 @@ import connectDB from "@/lib/db";
 import Todo from "@/models/Todo.model";
 import { revalidatePath } from "next/cache";
 
-export async function createTodo(formData: FormData) {
+export async function createTodo({ title }: { title: string }) {
     try {
         await connectDB();
-
-        const title = formData.get("title") as string;
 
         await Todo.create({ title });
 
