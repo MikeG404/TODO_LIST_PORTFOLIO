@@ -1,6 +1,6 @@
 'use client'
 
-import { completeTodo } from "@/actions/todoActions";
+import { completeTodo, deleteTodo } from "@/actions/todoActions";
 import { useState, ChangeEvent } from "react"
 
 interface TodoProps {
@@ -29,12 +29,15 @@ export default function Todo({ todo }: TodoProps) {
 
     return (
         <div className="flex">
-            <p>{todo.title}</p>
             <input
                 type="checkbox"
                 onChange={handleChangeCheckbox}
                 checked={isCompleted}
             />
+            <p>{todo.title}</p>
+            <button
+                className="text-red-500"
+                onClick={() => deleteTodo(todo._id)}>X</button>
         </div>
     )
 }

@@ -13,7 +13,7 @@
         - [x] Utiliser Map et importer Task
     - [x] Afficher la liste dans le Dahsboard
 
--  [ ] Gèrer la partie checkbox
+-  [X] Gèrer la partie checkbox
     - [X] Vérifier quelle propriété permet de checker
     - [X] Si isCompleted est true la checkbox est coché
     - [X] Faire le changement en DB
@@ -21,3 +21,11 @@
         - [X] Changer la valeur de isCompleted par true si il 
               est false et inversément
         - [X] Renvoyer un success
+- [X] Gérer la partie supprimer
+    - [X] Créer la fonction deleteTodo
+        - [X] Se connecter à la base de données avec connectDB()
+        - [X] Supprimer la tâche
+        - [X] Renvoyer un success
+
+- [X] Créer la partie UI
+    - [X] Créer le bouton supprimer pour chaque Todo
