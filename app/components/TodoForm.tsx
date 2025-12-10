@@ -20,7 +20,7 @@ export default function TodoForm() {
                 <input
                     type="text"
                     placeholder="Learn Javascript"
-                    className="h-full ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3"
+                    className="h-full ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
                     {...register("title", { required: "Title is required" })}
                 />
                 {errors.title && <p className="text-red-500">{errors.title.message}</p>}

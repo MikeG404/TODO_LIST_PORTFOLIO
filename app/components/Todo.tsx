@@ -54,7 +54,7 @@ export default function Todo({ todo }: TodoProps) {
     }
 
     return (
-        <div className="flex">
+        <div className="w-full flex gap-6">
             <input
                 type="checkbox"
                 onChange={handleChangeCheckbox}
@@ -65,14 +65,15 @@ export default function Todo({ todo }: TodoProps) {
                     ref={inputRef}
                     type="text"
                     value={title}
+                    className="flex-1 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
                     onChange={handleChangeTitle}
                     onBlur={handleBlur}
                 />
                 :
-                <p onClick={() => setIsEditing(true)}>{title}</p>
+                <p className="flex-1 text-white cursor-pointer" onClick={() => setIsEditing(true)}>{title}</p>
             }
             <button
-                className="text-red-500"
+                className="text-red-500 cursor-pointer"
                 onClick={() => deleteTodo(todo._id)}>X</button>
         </div >
     )

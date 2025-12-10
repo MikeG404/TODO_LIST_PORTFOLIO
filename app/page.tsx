@@ -4,11 +4,9 @@ import TodoList from "./components/TodoList";
 export default async function Home() {
 
   return (
-    <main className="flex justify-center pt-10">
+    <main className="flex flex-col items-center p-6">
         <TodoForm />
-        <div>
-          <TodoList />
-        </div>
+        <TodoList />
     </main>
   );
 }
