@@ -15,21 +15,21 @@ export default function TodoForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md flex gap-2 mb-8">
-            <div className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex max-w-2xl gap-4">
+            <div className="flex flex-col flex-1">
                 <input
                     type="text"
-                    placeholder="Nouvelle tâche..."
-                    className="flex-grow p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    {...register("title", { required: "Le titre est requis" })}
+                    placeholder="Learn Javascript"
+                    className="h-full ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3"
+                    {...register("title", { required: "Title is required" })}
                 />
                 {errors.title && <p className="text-red-500">{errors.title.message}</p>}
             </div>
             <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                className=" bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
             >
-                Ajouter
+                Add
             </button>
         </form>
     )
