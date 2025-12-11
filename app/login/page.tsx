@@ -1,5 +1,6 @@
 'use client'
 
+import { loginUser } from "@/actions/authActions";
 import { useForm } from "react-hook-form";
 
 interface ILoginFormInput {
@@ -16,17 +17,26 @@ export default function LoginPage() {
 
   const onSubmit = (data: ILoginFormInput) => {
     console.log(data);
+    loginUser(data);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label htmlFor="email">Email:</label>
-        <input type="email" name="email" placeholder="jhon.doe@example.com" />
+        <input 
+          type="email" 
+          placeholder="jhon.doe@example.com" 
+          {...register("email", { required: true })}
+          />
       </div>
       <div>
         <label htmlFor="password">Password:</label>
-        <input type="password" name="password" placeholder="*********" />
+        <input 
+          type="password" 
+          placeholder="*********" 
+          {...register("password", { required: true })}
+          />
       </div>
       <button type="submit">Login</button>
     </form>

@@ -3,7 +3,7 @@
 import { completeTodo, deleteTodo, updateTodo } from '@/actions/todoActions';
 import { Trash2 } from 'lucide-react';
 import { useState, ChangeEvent, useRef, useEffect } from 'react';
-import Checkbox from './ui/Checbox';
+import Checkbox from './ui/Checkbox';
 
 interface TodoProps {
   todo: {

@@ -1,5 +1,6 @@
 'use client'
 
+import { registerUser } from '@/actions/authActions';
 import { useForm } from 'react-hook-form';
 
 interface ISignUpFormInput {
@@ -15,8 +16,9 @@ export default function SignUpPage() {
         formState: { errors } 
     } = useForm<ISignUpFormInput>();
 
-    const onSubmit = (data: ISignUpFormInput) => {
+    const onSubmit = async (data: ISignUpFormInput) => {
         console.log(data);
+        await registerUser(data);
     }
 
 

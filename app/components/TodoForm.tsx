@@ -15,8 +15,8 @@ export default function TodoForm() {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  const onSubmit = (data: IFormInput) => {
-    createTodo(data);
+  const onSubmit = async (data: IFormInput) => {
+    await createTodo(data);
     reset();
   };
 
