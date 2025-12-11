@@ -64,13 +64,13 @@ export default function Todo({ todo }: TodoProps) {
           ref={inputRef}
           type="text"
           value={title}
-          className="flex-1 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
+          className="flex-1 ring-1 text-lg tracking-wide ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
           onChange={handleChangeTitle}
           onBlur={handleBlur}
         />
       ) : (
         <p
-          className="flex-1 text-white cursor-pointer"
+          className="flex-1 text-lg tracking-wide text-white cursor-pointer"
           onClick={() => setIsEditing(true)}
         >
           {title}

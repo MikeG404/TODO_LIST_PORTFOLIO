@@ -11,11 +11,13 @@ export default function TodoForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>();
 
   const onSubmit = (data: IFormInput) => {
     createTodo(data);
+    reset();
   };
 
   return (
