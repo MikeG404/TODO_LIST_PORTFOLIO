@@ -1,6 +1,7 @@
 'use client'
 
 import { completeTodo, deleteTodo, updateTodo } from "@/actions/todoActions";
+import { Trash2 } from "lucide-react";
 import { useState, ChangeEvent, useRef, useEffect } from "react"
 
 interface TodoProps {
@@ -54,7 +55,7 @@ export default function Todo({ todo }: TodoProps) {
     }
 
     return (
-        <div className="w-full flex gap-6">
+        <div className="w-full flex gap-6 border border-orange-500 py-6 px-4 rounded items-center">
             <input
                 type="checkbox"
                 onChange={handleChangeCheckbox}
@@ -74,7 +75,9 @@ export default function Todo({ todo }: TodoProps) {
             }
             <button
                 className="text-red-500 cursor-pointer"
-                onClick={() => deleteTodo(todo._id)}>X</button>
+                onClick={() => deleteTodo(todo._id)}>
+                    <Trash2 />
+                </button>
         </div >
     )
 }
