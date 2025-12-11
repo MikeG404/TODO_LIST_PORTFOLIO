@@ -15,9 +15,8 @@ export default function LoginPage() {
     formState: { errors } 
   } = useForm<ILoginFormInput>();
 
-  const onSubmit = (data: ILoginFormInput) => {
-    console.log(data);
-    loginUser(data);
+  const onSubmit = async (data: ILoginFormInput) => {
+    await loginUser(data);
   };
 
   return (
