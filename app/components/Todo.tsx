@@ -1,83 +1,97 @@
-'use client'
+'use client';
 
-import { completeTodo, deleteTodo, updateTodo } from "@/actions/todoActions";
-import { Trash2 } from "lucide-react";
-import { useState, ChangeEvent, useRef, useEffect } from "react"
+import { completeTodo, deleteTodo, updateTodo } from '@/actions/todoActions';
+import { Trash2 } from 'lucide-react';
+import { useState, ChangeEvent, useRef, useEffect } from 'react';
 
 interface TodoProps {
-    todo: {
-        _id: string;
-        title: string;
-        isCompleted: boolean;
-    }
+  todo: {
+    _id: string;
+    title: string;
+    isCompleted: boolean;
+  };
 }
 
 export default function Todo({ todo }: TodoProps) {
-    const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
+  const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
+  const [title, setTitle] = useState(todo.title);
+  const [isEditing, setIsEditing] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    const [title, setTitle] = useState(todo.title);
-    const [isEditing, setIsEditing] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
-    useEffect(() => {
-        if (isEditing && inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [isEditing]);
+  const handleChangeCheckbox = async (e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    const { success } = await completeTodo(todo._id, checked);
 
-    const handleChangeCheckbox = async (e: ChangeEvent<HTMLInputElement>) => {
-        const checked = e.target.checked;
-        const { success } = await completeTodo(todo._id, checked)
-
-        if (!success) {
-            console.error('Request failed');
-            return;
-        }
-
-        setIsCompleted(checked)
-
+    if (!success) {
+      console.error('Request failed');
+      return;
     }
 
-    const handleChangeTitle = async (e: ChangeEvent<HTMLInputElement>) => {
-        const title = e.target.value;
-        const { success } = await updateTodo(todo._id, title)
+    setIsCompleted(checked);
+  };
 
-        if (!success) {
-            console.error('Request failed');
-            return;
-        }
+  const handleChangeTitle = async (e: ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    const { success } = await updateTodo(todo._id, title);
 
-        setTitle(title)
+    if (!success) {
+      console.error('Request failed');
+      return;
     }
 
-    const handleBlur = () => {
-        setIsEditing(false)
-    }
+    setTitle(title);
+  };
 
-    return (
-        <div className="w-full flex gap-6 border border-orange-500 py-6 px-4 rounded items-center">
-            <input
-                type="checkbox"
-                onChange={handleChangeCheckbox}
-                checked={isCompleted}
-            />
-            {isEditing ?
-                <input
-                    ref={inputRef}
-                    type="text"
-                    value={title}
-                    className="flex-1 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-                    onChange={handleChangeTitle}
-                    onBlur={handleBlur}
-                />
-                :
-                <p className="flex-1 text-white cursor-pointer" onClick={() => setIsEditing(true)}>{title}</p>
-            }
-            <button
-                className="text-red-500 cursor-pointer"
-                onClick={() => deleteTodo(todo._id)}>
-                    <Trash2 />
-                </button>
-        </div >
-    )
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
+  return (
+    <div className="w-full flex gap-6 border border-orange-500 py-6 px-4 rounded items-center">
+      <label className="checkbox-container">
+        <input
+          type="checkbox"
+          className="peer sr-only"
+          onChange={handleChangeCheckbox}
+          checked={isCompleted}
+        />
+        <div
+          className={`w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all duration-200 ${
+            isCompleted
+              ? 'bg-blue-600 border-blue-600'
+              : 'bg-white border-gray-300 group-hover:border-blue-400'
+          }`}
+        />
+      </label>
+      {isEditing ? (
+        <input
+          ref={inputRef}
+          type="text"
+          value={title}
+          className="flex-1 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
+          onChange={handleChangeTitle}
+          onBlur={handleBlur}
+        />
+      ) : (
+        <p
+          className="flex-1 text-white cursor-pointer"
+          onClick={() => setIsEditing(true)}
+        >
+          {title}
+        </p>
+      )}
+      <button
+        className="text-red-500 cursor-pointer"
+        onClick={() => deleteTodo(todo._id)}
+      >
+        <Trash2 />
+      </button>
+    </div>
+  );
 }
