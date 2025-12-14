@@ -8,7 +8,7 @@ export default async function Home() {
     <main className="flex flex-col items-center p-6">
       <div className="w-full max-w-md flex justify-end mb-4">
         <form action={logoutUser}>
-          <button type="submit" className="text-sm text-red-500 hover:text-red-700">
+          <button type="submit" className=" cursor-pointer text-sm text-red-500 hover:text-red-700">
             Se déconnecter
           </button>
         </form>

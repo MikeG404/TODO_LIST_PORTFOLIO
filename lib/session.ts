@@ -2,7 +2,7 @@ import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 
-const secretKey = process.env.SESSION_SECRET || 'secret-key-super-secure-change-me'
+const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
 type SessionPayload = {
@@ -49,4 +49,11 @@ export async function createSession(userId: string, email: string, username: str
 export async function deleteSession() {
     const cookieStore = await cookies()
     cookieStore.delete('session')
+}
+
+
+export async function getSession() {
+    const cookieStore = await cookies()
+    const session = cookieStore.get('session')?.value
+    return session ? await decrypt(session) : null
 }
