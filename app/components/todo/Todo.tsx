@@ -5,7 +5,7 @@ import { Trash2 } from 'lucide-react';
 import { useState, ChangeEvent, useRef, useEffect } from 'react';
 import Checkbox from '../ui/Checkbox';
 
-interface TodoProps {
+export interface TodoProps {
   todo: {
     _id: string;
     title: string;
