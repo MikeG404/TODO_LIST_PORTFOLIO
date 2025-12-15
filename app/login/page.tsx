@@ -1,7 +1,10 @@
 'use client';
 
 import { loginUser } from '@/actions/authActions';
-import Link from 'next/link';
+import AuthNavigation from '@/app/components/auth/AuthNavigation';
+import GlobalError from '@/app/components/auth/AuthGlobalError';
+import Input from '@/app/components/ui/Input';
+import SubmitButton from '@/app/components/ui/SubmitButton';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -36,54 +39,31 @@ export default function LoginPage() {
       >
         <h1 className="text-2xl font-bold text-white text-center mb-4">Login</h1>
 
-        {globalError && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-2 rounded text-sm text-center">
-            {globalError}
-          </div>
-        )}
+        <GlobalError error={globalError} />
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="text-white text-sm">
-            Email
-          </label>
-          <input
-            type="email"
-            placeholder="jhon.doe@example.com"
-            className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-            {...register('email', { required: 'Email is required' })}
-          />
-          {errors.email && (
-            <span className="text-red-500 text-xs">{errors.email.message}</span>
-          )}
-        </div>
+        <Input
+          label="Email"
+          type="email"
+          placeholder="jhon.doe@example.com"
+          {...register('email', { required: 'Email is required' })}
+          error={errors.email}
+        />
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="password" className="text-white text-sm">
-            Password
-          </label>
-          <input
-            type="password"
-            placeholder="*********"
-            className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-            {...register('password', { required: 'Password is required' })}
-          />
-          {errors.password && (
-            <span className="text-red-500 text-xs">{errors.password.message}</span>
-          )}
-        </div>
+        <Input
+          label="Password"
+          type="password"
+          placeholder="*********"
+          {...register('password', { required: 'Password is required' })}
+          error={errors.password}
+        />
 
-        <button
-          type="submit"
-          className="w-full bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition font-medium mt-4"
-        >
-          Login
-        </button>
+        <SubmitButton>Login</SubmitButton>
 
-        <div className="flex justify-center">
-          <Link href="/sign-up" className="text-white text-sm">
-            Don't have an account? Sign Up
-          </Link>
-        </div>
+        <AuthNavigation
+          text="Don't have an account?"
+          linkText="Sign Up"
+          href="/sign-up"
+        />
       </form>
     </div>
   );

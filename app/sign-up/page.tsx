@@ -1,7 +1,10 @@
 'use client'
 
 import { registerUser } from '@/actions/authActions';
-import Link from 'next/link';
+import AuthNavigation from '@/app/components/auth/AuthNavigation';
+import GlobalError from '@/app/components/auth/AuthGlobalError';
+import Input from '@/app/components/ui/Input';
+import SubmitButton from '@/app/components/ui/SubmitButton';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -37,70 +40,39 @@ export default function SignUpPage() {
             >
                 <h1 className="text-2xl font-bold text-white text-center mb-4">Sign Up</h1>
 
-                {globalError && (
-                    <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-2 rounded text-sm text-center">
-                        {globalError}
-                    </div>
-                )}
+                <GlobalError error={globalError} />
 
-                <div className="flex flex-col gap-1">
-                    <label htmlFor="username" className="text-white text-sm">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="JD404"
-                        className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-                        {...register('username', { required: 'Username is required', minLength: { value: 3, message: 'Username must be at least 3 characters' } })}
-                    />
-                    {errors.username && (
-                        <span className="text-red-500 text-xs">{errors.username.message}</span>
-                    )}
-                </div>
+                <Input
+                    label="Username"
+                    type="text"
+                    placeholder="JD404"
+                    {...register('username', { required: 'Username is required', minLength: { value: 3, message: 'Username must be at least 3 characters' } })}
+                    error={errors.username}
+                />
 
-                <div className="flex flex-col gap-1">
-                    <label htmlFor="email" className="text-white text-sm">
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        placeholder="jhon.doe@example.com"
-                        className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-                        {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email format' } })}
-                    />
-                    {errors.email && (
-                        <span className="text-red-500 text-xs">{errors.email.message}</span>
-                    )}
-                </div>
+                <Input
+                    label="Email"
+                    type="email"
+                    placeholder="jhon.doe@example.com"
+                    {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email format' } })}
+                    error={errors.email}
+                />
 
-                <div className="flex flex-col gap-1">
-                    <label htmlFor="password" className="text-white text-sm">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        placeholder="*********"
-                        className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-                        {...register('password', { required: 'Password is required', minLength: { value: 9, message: 'Password must be at least 9 characters' } })}
-                    />
-                    {errors.password && (
-                        <span className="text-red-500 text-xs">{errors.password.message}</span>
-                    )}
-                </div>
+                <Input
+                    label="Password"
+                    type="password"
+                    placeholder="*********"
+                    {...register('password', { required: 'Password is required', minLength: { value: 9, message: 'Password must be at least 9 characters' } })}
+                    error={errors.password}
+                />
 
+                <SubmitButton>Sign Up</SubmitButton>
 
-                <button
-                    type="submit"
-                    className="w-full bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition font-medium mt-4"
-                >
-                    Sign Up
-                </button>
-
-                <div className="flex justify-center">
-                    <Link href="/login" className="text-white text-sm">
-                        Already have an account? Login
-                    </Link>
-                </div>
+                <AuthNavigation
+                    text="Already have an account?"
+                    linkText="Login"
+                    href="/login"
+                />
             </form>
         </div>
     );

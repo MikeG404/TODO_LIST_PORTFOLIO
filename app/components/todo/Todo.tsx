@@ -3,7 +3,7 @@
 import { completeTodo, deleteTodo, updateTodo } from '@/actions/todoActions';
 import { Trash2 } from 'lucide-react';
 import { useState, ChangeEvent, useRef, useEffect } from 'react';
-import Checkbox from './ui/Checkbox';
+import Checkbox from '../ui/Checkbox';
 
 interface TodoProps {
   todo: {
@@ -55,10 +55,10 @@ export default function Todo({ todo }: TodoProps) {
 
   return (
     <div className="w-full flex gap-6 border border-orange-500 py-6 px-4 rounded items-center">
-        <Checkbox
+      <Checkbox
         isCompleted={isCompleted}
         handleChangeCheckbox={handleChangeCheckbox}
-        />
+      />
       {isEditing ? (
         <input
           ref={inputRef}

@@ -1,5 +1,5 @@
-import TodoForm from "./components/TodoForm";
-import TodoList from "./components/TodoList";
+import TodoForm from "./components/todo/TodoForm";
+import TodoList from "./components/todo/TodoList";
 import { logoutUser } from "@/actions/authActions";
 
 export default async function Home() {
