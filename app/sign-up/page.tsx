@@ -1,6 +1,8 @@
 'use client'
 
 import { registerUser } from '@/actions/authActions';
+import Link from 'next/link';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface ISignUpFormInput {
@@ -10,6 +12,8 @@ interface ISignUpFormInput {
 }
 
 export default function SignUpPage() {
+    const [globalError, setGlobalError] = useState<string>("");
+
     const {
         register,
         handleSubmit,
@@ -17,8 +21,11 @@ export default function SignUpPage() {
     } = useForm<ISignUpFormInput>();
 
     const onSubmit = async (data: ISignUpFormInput) => {
-        console.log(data);
-        await registerUser(data);
+        setGlobalError("");
+        const result = await registerUser(data);
+        if (result?.error) {
+            setGlobalError(result.error);
+        }
     }
 
 
@@ -30,6 +37,12 @@ export default function SignUpPage() {
             >
                 <h1 className="text-2xl font-bold text-white text-center mb-4">Sign Up</h1>
 
+                {globalError && (
+                    <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-2 rounded text-sm text-center">
+                        {globalError}
+                    </div>
+                )}
+
                 <div className="flex flex-col gap-1">
                     <label htmlFor="username" className="text-white text-sm">
                         Username
@@ -38,7 +51,7 @@ export default function SignUpPage() {
                         type="text"
                         placeholder="JD404"
                         className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-                        {...register('username', { required: 'Username is required' })}
+                        {...register('username', { required: 'Username is required', minLength: { value: 3, message: 'Username must be at least 3 characters' } })}
                     />
                     {errors.username && (
                         <span className="text-red-500 text-xs">{errors.username.message}</span>
@@ -53,7 +66,7 @@ export default function SignUpPage() {
                         type="email"
                         placeholder="jhon.doe@example.com"
                         className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-                        {...register('email', { required: 'Email is required' })}
+                        {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email format' } })}
                     />
                     {errors.email && (
                         <span className="text-red-500 text-xs">{errors.email.message}</span>
@@ -68,12 +81,13 @@ export default function SignUpPage() {
                         type="password"
                         placeholder="*********"
                         className="w-full py-2 ring-1 ring-orange-500 rounded placeholder:text-zinc-500 pl-3 text-white outline-none bg-zinc-900 focus:ring-2 focus:ring-yellow-600 transition"
-                        {...register('password', { required: 'Password is required' })}
+                        {...register('password', { required: 'Password is required', minLength: { value: 9, message: 'Password must be at least 9 characters' } })}
                     />
                     {errors.password && (
                         <span className="text-red-500 text-xs">{errors.password.message}</span>
                     )}
                 </div>
+
 
                 <button
                     type="submit"
@@ -81,6 +95,12 @@ export default function SignUpPage() {
                 >
                     Sign Up
                 </button>
+
+                <div className="flex justify-center">
+                    <Link href="/login" className="text-white text-sm">
+                        Already have an account? Login
+                    </Link>
+                </div>
             </form>
         </div>
     );

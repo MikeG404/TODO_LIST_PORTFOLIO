@@ -1,6 +1,8 @@
 'use client';
 
 import { loginUser } from '@/actions/authActions';
+import Link from 'next/link';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface ILoginFormInput {
@@ -9,6 +11,8 @@ interface ILoginFormInput {
 }
 
 export default function LoginPage() {
+  const [globalError, setGlobalError] = useState<string>("");
+
   const {
     register,
     handleSubmit,
@@ -16,7 +20,11 @@ export default function LoginPage() {
   } = useForm<ILoginFormInput>();
 
   const onSubmit = async (data: ILoginFormInput) => {
-    await loginUser(data);
+    setGlobalError("");
+    const result = await loginUser(data);
+    if (result?.error) {
+      setGlobalError(result.error);
+    }
   };
 
   return (
@@ -24,8 +32,15 @@ export default function LoginPage() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md p-8 bg-zinc-900 border border-orange-500 rounded-lg shadow-lg flex flex-col gap-4"
+        noValidate
       >
         <h1 className="text-2xl font-bold text-white text-center mb-4">Login</h1>
+
+        {globalError && (
+          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-2 rounded text-sm text-center">
+            {globalError}
+          </div>
+        )}
 
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-white text-sm">
@@ -63,6 +78,12 @@ export default function LoginPage() {
         >
           Login
         </button>
+
+        <div className="flex justify-center">
+          <Link href="/sign-up" className="text-white text-sm">
+            Don't have an account? Sign Up
+          </Link>
+        </div>
       </form>
     </div>
   );

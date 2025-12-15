@@ -12,7 +12,7 @@ export async function registerUser({ username, email, password }: { username: st
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-        throw new Error("Email is already registered");
+        return { error: "Email is already registered" };
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -28,12 +28,12 @@ export async function loginUser({ email, password }: { email: string, password: 
 
     const user = await User.findOne({ email });
     if (!user) {
-        throw new Error("Invalid email or password");
+        return { error: "Invalid email or password" };
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-        throw new Error("Invalid email or password");
+        return { error: "Invalid email or password" };
     }
 
     await createSession(user._id.toString(), user.email, user.username);
