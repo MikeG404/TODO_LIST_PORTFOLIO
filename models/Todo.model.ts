@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface ITodo extends Document {
     title: string;
     isCompleted: boolean;
+    order: number;
     createdAt: Date;
     user: string;
 }
@@ -17,6 +18,11 @@ const TodoSchema: Schema = new Schema({
     isCompleted: {
         type: Boolean,
         default: false,
+    },
+    order: {
+        type: Number,
+        required: true,
+        index: true,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

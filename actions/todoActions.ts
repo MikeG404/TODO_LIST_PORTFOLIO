@@ -13,7 +13,12 @@ export async function createTodo({ title }: { title: string }) {
 
         if (!session) return { success: false, error: 'User not authenticated' }
 
-        await Todo.create({ title, user: session.userId });
+        // Find the item with the highest order to put the new one at the end (or beginning)
+        // Here we put it at the end (highest order + 1)
+        const lastTodo = await Todo.findOne({ user: session.userId }).sort({ order: -1 });
+        const newOrder = lastTodo && lastTodo.order !== undefined ? lastTodo.order + 1 : 0;
+
+        await Todo.create({ title, user: session.userId, order: newOrder });
 
         revalidatePath("/");
 
@@ -32,12 +37,40 @@ export async function getTodos() {
 
         if (!session) return { success: false, error: 'User not authenticated' }
 
-        const todos = await Todo.find({ user: session.userId }).sort({ createdAt: -1 }).lean();
+        // Sort by 'order' ascending (0, 1, 2...) instead of createdAt
+        const todos = await Todo.find({ user: session.userId }).sort({ order: 1 }).lean();
 
         return { success: true, todos: JSON.parse(JSON.stringify(todos)) };
     } catch (e) {
         console.error('Error retrieve todo', e);
         return { success: false, error: 'Cannot retrieve todos' }
+    }
+}
+
+export async function reorderTodos(items: { id: string; order: number }[]) {
+    try {
+        await connectDB();
+
+        const session = await getSession();
+        if (!session) return { success: false, error: 'Not authenticated' };
+
+        // We use a transaction or bulkWrite for better performance/safety with multiple updates
+        // But for simplicity in this portfolio, we'll use Promise.all
+        // ensuring we only update todos that belong to the user
+        const updates = items.map((item) =>
+            Todo.findOneAndUpdate(
+                { _id: item.id, user: session.userId },
+                { order: item.order }
+            )
+        );
+
+        await Promise.all(updates);
+
+        revalidatePath('/');
+        return { success: true };
+    } catch (error) {
+        console.error('Failed to reorder todos:', error);
+        return { success: false, error: 'Failed to reorder todos' };
     }
 }
 

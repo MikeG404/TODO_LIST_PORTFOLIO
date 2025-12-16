@@ -10,3 +10,4 @@ This app demonstrate the use of ChatGPT API to create a todo list app with Next.
 - ChatGPT API
 - JWT
 - Cookies
+- @hello-pangea/dnd
